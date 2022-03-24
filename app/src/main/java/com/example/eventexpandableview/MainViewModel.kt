@@ -1,32 +1,45 @@
 package com.example.eventexpandableview
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.io.FileReader
 
 class MainViewModel : ViewModel() {
 
-    fun parseJson(json: String) {
+    fun prepareMapForExpandableListView(json: String): MutableList<ParentEvent> {
         val gson = Gson()
         val eventList: EventMain = gson.fromJson(json, EventMain::class.java)
-        eventList.notificationList.forEachIndexed { idx, event ->
-            Log.i(
-                "Event Tag", event.notificationHeader +
-                        " -- " + event.notificationSubZoneName +
-                        " -- " + event.notificationTimestamp
-            )
-        }
-        prepareMapForExpandableListView(eventList.notificationList)
-    }
-
-    private fun prepareMapForExpandableListView(notificationList: List<Event>) {
-        val hm: HashMap<Int, List<Event>> = HashMap()
-        val keyOrder = 1
-        val duplicateList = notificationList
+        val notificationList = eventList.notificationList.toMutableList()
+        val parentEventList: MutableList<ParentEvent> = mutableListOf()
+        val duplicateList = notificationList.toMutableList()
         notificationList.forEachIndexed { index, event ->
-            
+            val id: String = event.notificationId
+            val header: String = event.notificationHeader
+            val subZone: String = event.notificationSubZoneName
+            val timeStamp: String = event.notificationTimestamp
+            val childEventList: MutableList<Event> = mutableListOf()
+
+            for (i in index + 1 until notificationList.size) {
+                val event1 = notificationList[i]
+                val duplicateEvent1: Event? =
+                    duplicateList.find { it.notificationId.equals(event1.notificationId) }
+                duplicateEvent1?.let {
+                    val prevEventTime = DateUtils.getDate(event.notificationTimestamp).time
+                    val currEventTime = DateUtils.getDate(event1.notificationTimestamp).time
+                    val diff = 2 * 60 * 1000
+                    if (header.equals(event1.notificationHeader) && (prevEventTime - currEventTime) <= diff) {
+                        childEventList.add(event1)
+                        duplicateList.remove(event1)
+                    }
+                }
+            }
+            val duplicateEvent: Event? = duplicateList.find { it.notificationId.equals(id) }
+            duplicateEvent?.let {
+                val parentEvent =
+                    ParentEvent(header, subZone, timeStamp, childList = childEventList)
+                parentEventList.add(parentEvent)
+                duplicateList.remove(event)
+            }
         }
+        return parentEventList
     }
 }
