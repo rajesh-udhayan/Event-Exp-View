@@ -48,9 +48,12 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                 linParent?.setBackgroundColor(Color.parseColor(dataList.background))
                 if (dataList.childList.isEmpty()) {
                     imgBtnExpand?.visibility = View.GONE
+                    txtBadge?.visibility = View.GONE
                     linParent?.setOnClickListener(null)
                 } else {
                     imgBtnExpand?.visibility = View.VISIBLE
+                    txtBadge?.visibility = View.VISIBLE
+                    txtBadge?.text = (dataList.childList.size + 1).toString()
                     if (dataList.isExpanded) {
                         imgBtnExpand?.setImageResource(R.mipmap.ic_arrrow_down_round)
                     } else {
@@ -101,6 +104,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
 
             events.forEach { event ->
                 val parentModel = ParentEvent(
+                    event.notificationId,
                     event.notificationHeader, event.notificationSubZoneName,
                     event.notificationTimestamp,
                     Constants.CHILD, background = currentEventRow.background
@@ -148,6 +152,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
         val txtNotificationTime = row.findViewById(R.id.txtNotificationTime) as TextView?
         val imgBtnExpand = row.findViewById(R.id.imgBtnExpand) as ImageView?
         val linParent = row.findViewById(R.id.linParent) as LinearLayout?
+        val txtBadge = row.findViewById(R.id.txtBadge) as TextView?
     }
 
     class ChildViewHolder(row: View) : RecyclerView.ViewHolder(row) {

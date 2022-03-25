@@ -4,6 +4,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 data class ParentEvent(
+    val notificationID : String? = null,
     val notificationHeader: String? = null,
     val notificationSubZoneName: String? = null,
     val notificationTimestamp: String? = null,

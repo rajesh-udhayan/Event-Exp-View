@@ -10,7 +10,7 @@ object DateUtils {
 
         val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         parser.timeZone = TimeZone.getTimeZone("UTC")
-        val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm a")
+        val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss a")
         formatter.timeZone = TimeZone.getDefault()
 
         var result: Date = Date()
