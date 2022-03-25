@@ -10,6 +10,7 @@
        android:id="@+id/eventRecyclerView"
        android:layout_width="match_parent"
        android:background="#372196F3"
-       android:layout_height="match_parent"/>
+       android:layout_height="match_parent"
+       android:paddingBottom="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,7 +41,7 @@ class MainViewModel : ViewModel() {
                     bgColor = "#e9e9e9"
                 }
                 val parentEvent =
-                    ParentEvent(header, subZone, timeStamp, childList = childEventList,backgroud = bgColor)
+                    ParentEvent(header, subZone, timeStamp, childList = childEventList,background = bgColor)
                 parentEventList.add(parentEvent)
                 duplicateList.remove(event)
             }

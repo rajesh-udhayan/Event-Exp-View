@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private lateinit var mRecyclerView: RecyclerView
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == Constants.PARENT) {
@@ -44,9 +45,10 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                         it
                     )
                 }
-                linParent?.setBackgroundColor(Color.parseColor(dataList.backgroud))
+                linParent?.setBackgroundColor(Color.parseColor(dataList.background))
                 if (dataList.childList.isEmpty()) {
                     imgBtnExpand?.visibility = View.GONE
+                    linParent?.setOnClickListener(null)
                 } else {
                     imgBtnExpand?.visibility = View.VISIBLE
                     if (dataList.isExpanded) {
@@ -54,7 +56,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                     } else {
                         imgBtnExpand?.setImageResource(R.mipmap.ic_arrrow_right_round)
                     }
-                    imgBtnExpand?.setOnClickListener {
+                    linParent?.setOnClickListener {
                         expandOrCollapseParentItem(dataList, position)
                     }
                 }
@@ -76,7 +78,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                         it
                     )
                 }
-                linChild?.setBackgroundColor(Color.parseColor(dataList.backgroud))
+                linChild?.setBackgroundColor(Color.parseColor(dataList.background))
             }
         }
 
@@ -101,11 +103,12 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                 val parentModel = ParentEvent(
                     event.notificationHeader, event.notificationSubZoneName,
                     event.notificationTimestamp,
-                    Constants.CHILD, backgroud = currentEventRow.backgroud
+                    Constants.CHILD, background = currentEventRow.background
                 )
                 parentList.add(++nextPosition, parentModel)
             }
             notifyDataSetChanged()
+            mRecyclerView.scrollToPosition(nextPosition)
         }
     }
 
@@ -131,6 +134,11 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        mRecyclerView = recyclerView
     }
 
     class HeaderViewHolder(row: View) : RecyclerView.ViewHolder(row) {
