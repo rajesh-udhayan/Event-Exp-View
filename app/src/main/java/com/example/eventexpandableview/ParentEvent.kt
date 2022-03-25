@@ -9,5 +9,6 @@ data class ParentEvent(
     val notificationTimestamp: String? = null,
     var type: Int = Constants.PARENT,
     var childList: MutableList<Event> = ArrayList(),
-    var isExpanded: Boolean = false
+    var isExpanded: Boolean = false,
+    var backgroud:String = "#ffffff"
 )

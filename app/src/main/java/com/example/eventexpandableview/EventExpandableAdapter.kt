@@ -1,15 +1,19 @@
 package com.example.eventexpandableview
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == Constants.PARENT) {
             val rowView: View = LayoutInflater.from(parent.context)
@@ -40,6 +44,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                         it
                     )
                 }
+                linParent?.setBackgroundColor(Color.parseColor(dataList.backgroud))
                 if (dataList.childList.isEmpty()) {
                     imgBtnExpand?.visibility = View.GONE
                 } else {
@@ -71,6 +76,8 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                         it
                     )
                 }
+                linChild?.setBackgroundColor(Color.parseColor(dataList.backgroud))
+
 
             }
         }
@@ -96,7 +103,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                 val parentModel = ParentEvent(
                     event.notificationHeader, event.notificationSubZoneName,
                     event.notificationTimestamp,
-                    Constants.CHILD
+                    Constants.CHILD, backgroud = currentEventRow.backgroud
                 )
 //                val subList: ArrayList<Event> = ArrayList()
 //                subList.add(event)
@@ -137,6 +144,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
         val txtNotificationDate = row.findViewById(R.id.txtNotificationDate) as TextView?
         val txtNotificationTime = row.findViewById(R.id.txtNotificationTime) as TextView?
         val imgBtnExpand = row.findViewById(R.id.imgBtnExpand) as ImageView?
+        val linParent = row.findViewById(R.id.linParent) as LinearLayout?
     }
 
     class ChildViewHolder(row: View) : RecyclerView.ViewHolder(row) {
@@ -144,6 +152,7 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
         val txtNotificationSubZone = row.findViewById(R.id.txtNotificationSubZone) as TextView?
         val txtNotificationDate = row.findViewById(R.id.txtNotificationDate) as TextView?
         val txtNotificationTime = row.findViewById(R.id.txtNotificationTime) as TextView?
+        val linChild = row.findViewById(R.id.linChild) as LinearLayout?
 
     }
 

@@ -9,6 +9,7 @@
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/eventRecyclerView"
        android:layout_width="match_parent"
+       android:background="#372196F3"
        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

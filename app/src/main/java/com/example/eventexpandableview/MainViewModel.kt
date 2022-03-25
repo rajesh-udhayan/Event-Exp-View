@@ -34,8 +34,14 @@ class MainViewModel : ViewModel() {
             }
             val duplicateEvent: Event? = duplicateList.find { it.notificationId.equals(id) }
             duplicateEvent?.let {
+                var bgColor : String = ""
+                if(parentEventList.size % 2 == 0){
+                    bgColor = "#ffffff"
+                }else{
+                    bgColor = "#e9e9e9"
+                }
                 val parentEvent =
-                    ParentEvent(header, subZone, timeStamp, childList = childEventList)
+                    ParentEvent(header, subZone, timeStamp, childList = childEventList,backgroud = bgColor)
                 parentEventList.add(parentEvent)
                 duplicateList.remove(event)
             }
