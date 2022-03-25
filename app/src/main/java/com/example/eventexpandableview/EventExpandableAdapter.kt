@@ -77,8 +77,6 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                     )
                 }
                 linChild?.setBackgroundColor(Color.parseColor(dataList.backgroud))
-
-
             }
         }
 
@@ -105,9 +103,6 @@ class EventExpandableAdapter(val parentList: MutableList<ParentEvent>) :
                     event.notificationTimestamp,
                     Constants.CHILD, backgroud = currentEventRow.backgroud
                 )
-//                val subList: ArrayList<Event> = ArrayList()
-//                subList.add(event)
-//                parentModel.childList = subList
                 parentList.add(++nextPosition, parentModel)
             }
             notifyDataSetChanged()

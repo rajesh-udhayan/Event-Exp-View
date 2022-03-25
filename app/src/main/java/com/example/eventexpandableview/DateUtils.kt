@@ -6,7 +6,6 @@ import java.util.*
 
 object DateUtils {
 
-    //2021-12-29T19:43:07.000+00:00
     fun getDate(date: String): Date {
 
         val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")

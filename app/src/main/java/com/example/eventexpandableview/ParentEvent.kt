@@ -10,5 +10,6 @@ data class ParentEvent(
     var type: Int = Constants.PARENT,
     var childList: MutableList<Event> = ArrayList(),
     var isExpanded: Boolean = false,
-    var backgroud:String = "#ffffff"
+    var background:String = "#ffffff"
 )
+
